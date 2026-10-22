@@ -4,68 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Campus Club & Society Recruitment Portal | South Asian University</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+<link rel="stylesheet" href="style.css">
 
-  body {
-    font-family: Georgia, serif;
-    color: #14233a;
-    line-height: 1.6;
-  }
-
-  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-
-  /* Header */
-  header { border-bottom: 1px solid #c9ddf2; padding: 10px 0; }
-  header .container { display: flex; justify-content: space-between; align-items: center; }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo img { height: 55px; }
-  .logo span { font-size: 18px; font-weight: bold; color: #0a2a4d; }
-  nav a { margin-left: 20px; color: #0a2a4d; text-decoration: none; }
-  nav a:hover { color: #0b5fb0; }
-
-  /* Hero */
-  .hero { background: #0b5fb0; color: white; text-align: center; padding: 80px 20px; }
-  .hero h1 { font-size: 42px; margin-bottom: 15px; }
-  .hero p { max-width: 600px; margin: 0 auto 25px; font-size: 18px; }
-
-  .btn {
-    display: inline-block;
-    background: #f2a900;
-    color: #0a2a4d;
-    padding: 12px 28px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .btn:hover { background: #ffc233; }
-
-  /* Sections */
-  section { padding: 60px 0; }
-  h2 { text-align: center; color: #0a2a4d; font-size: 30px; margin-bottom: 30px; }
-
-  /* Club cards */
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .card { background: #eaf2fb; padding: 22px; border-radius: 8px; }
-  .card h3 { color: #0a2a4d; margin-bottom: 8px; }
-  .card p { font-size: 15px; margin-bottom: 10px; }
-  .card .date { font-size: 14px; color: #0b5fb0; font-weight: bold; }
-
-  /* Steps */
-  .steps-section { background: #eaf2fb; }
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
-  .step h3 { color: #0b5fb0; margin-bottom: 6px; }
-
-  /* Footer */
-  footer { background: #0a2a4d; color: white; text-align: center; padding: 25px 20px; }
-
-  /* Mobile */
-  @media (max-width: 700px) {
-    header .container { flex-direction: column; gap: 10px; }
-    .cards, .steps { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 30px; }
-  }
-</style>
 </head>
 <body>
 
@@ -78,7 +18,7 @@
     <nav>
       <a href="#clubs">Clubs</a>
       <a href="#how">How it works</a>
-      <a href="#apply">Sign in</a>
+      <a href="#apply" id="navAuth">Sign in</a>
     </nav>
   </div>
 </header>
@@ -92,7 +32,7 @@
 <section id="clubs">
   <div class="container">
     <h2>Clubs and Societies</h2>
-    <div class="cards">
+    <div class="cards" id="clubCards">
       <div class="card">
         <h3>Coding & Robotics Club</h3>
         <p>Hack nights, workshops and hackathons for tech lovers.</p>
@@ -143,13 +83,155 @@
   <div class="container">
     <h2>Ready to Join?</h2>
     <p style="margin-bottom:20px;">Sign in with your South Asian University email to start applying.</p>
-    <a class="btn" href="#">Sign In</a>
+    <a class="btn" href="#" id="signInButton">Sign In / Register</a>
+    <p id="sessionMessage" style="margin-top:14px;"></p>
+    <div class="portal-panel" id="authPanel" aria-live="polite">
+      <h3 id="authHeading">Student sign in</h3>
+      <p style="margin-bottom:14px;">Use your student account to apply to clubs and track your applications.</p>
+      <div class="portal-actions">
+        <button type="button" class="small-btn" id="showLogin">Sign in</button>
+        <button type="button" class="small-btn secondary" id="showRegister">Create account</button>
+      </div>
+      <form class="portal-form" id="authForm">
+        <div id="nameField" class="portal-hidden"><label for="fullName">Full name</label><input id="fullName" name="name" autocomplete="name" minlength="2" maxlength="80" /></div>
+        <div><label for="email">University email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@university.edu" /></div>
+        <div><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="At least 8 characters" /></div>
+        <button type="submit" class="btn" id="authSubmit">Sign in</button>
+      </form>
+      <p id="authMessage" class="portal-message"></p>
+    </div>
+    <div class="portal-panel" id="studentPanel" aria-live="polite">
+      <h3 id="welcomeHeading">Your student dashboard</h3>
+      <div class="portal-actions"><button type="button" class="small-btn" id="refreshApplications">Refresh applications</button><button type="button" class="small-btn secondary" id="logoutButton">Sign out</button></div>
+      <h3>Apply to a club</h3>
+      <form class="portal-form" id="applicationForm">
+        <div><label for="clubSelect">Choose a club</label><select id="clubSelect" required><option value="">Loading clubs…</option></select></div>
+        <div><label for="studentCourse">Course / programme</label><input id="studentCourse" required maxlength="100" placeholder="e.g. B.Tech Computer Science" /></div>
+        <div><label for="studentYear">Year of study</label><select id="studentYear" required><option value="">Select year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>Postgraduate</option></select></div>
+        <div><label for="motivation">Why do you want to join?</label><textarea id="motivation" required minlength="20" maxlength="1500" rows="4" placeholder="Tell the club why you're interested (20–1500 characters)"></textarea></div>
+        <button type="submit" class="btn">Submit application</button>
+      </form>
+      <p id="applicationMessage" class="portal-message"></p>
+      <h3 style="margin-top:24px;">My applications</h3><div id="applicationList"><p>Sign in to view applications.</p></div>
+    </div>
+    <div class="portal-panel" id="adminPanel" aria-live="polite">
+      <h3>Recruitment admin dashboard</h3>
+      <div class="portal-actions"><button type="button" class="small-btn" id="refreshAdmin">Refresh applications</button><button type="button" class="small-btn secondary" id="adminLogout">Sign out</button></div>
+      <p>Review student applications and update their status.</p><div id="adminApplications"><p>Loading applications…</p></div>
+    </div>
   </div>
 </section>
 
 <footer>
   <p>South Asian University, New Delhi | Student Affairs Office</p>
 </footer>
+
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  let token = localStorage.getItem('campusPortalToken');
+  let authMode = 'login';
+  let clubsCache = [];
+  const panels = ['authPanel', 'studentPanel', 'adminPanel'];
+  function showPanel(id) { panels.forEach(p => $(p).classList.toggle('visible', p === id)); }
+  function message(id, text, type='') { const el=$(id); el.textContent=text; el.className='portal-message'+(type?' '+type:''); }
+  async function api(path, options={}) {
+    const headers = { ...(options.headers || {}) };
+    if (options.body && !(options.body instanceof FormData)) headers['Content-Type']='application/json';
+    if (token) headers.Authorization='Bearer '+token;
+    const response=await fetch('/api'+path,{...options,headers});
+    const data=await response.json().catch(()=>({message:'Unexpected server response'}));
+    if (!response.ok) throw new Error(data.message || 'Request failed');
+    return data;
+  }
+  function setAuthMode(mode) {
+    authMode=mode;
+    $('authHeading').textContent=mode==='register'?'Create student account':'Student sign in';
+    $('nameField').classList.toggle('portal-hidden',mode!=='register');
+    $('fullName').required=mode==='register';
+    $('password').autocomplete=mode==='register'?'new-password':'current-password';
+    $('authSubmit').textContent=mode==='register'?'Create account':'Sign in';
+    message('authMessage','');
+  }
+  function openAuth() { showPanel('authPanel'); $('apply').scrollIntoView({behavior:'smooth'}); }
+  $('showLogin').addEventListener('click',()=>setAuthMode('login'));
+  $('showRegister').addEventListener('click',()=>setAuthMode('register'));
+  $('signInButton').addEventListener('click',e=>{e.preventDefault();openAuth();});
+  $('navAuth').addEventListener('click',e=>{e.preventDefault();token?loadDashboard():openAuth();});
+  $('authForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const payload={email:$('email').value.trim(),password:$('password').value};
+    if(authMode==='register') payload.name=$('fullName').value.trim();
+    try {
+      const result=await api('/auth/'+(authMode==='register'?'register':'login'),{method:'POST',body:JSON.stringify(payload)});
+      token=result.token; localStorage.setItem('campusPortalToken',token);
+      message('sessionMessage','Signed in as '+result.user.name+'.','success');
+      await loadDashboard();
+    } catch(err) { message('authMessage',err.message,'error'); }
+  });
+  async function loadClubs() {
+    try {
+      const data=await api('/clubs'); clubsCache=data.clubs||[];
+      const cards=$('clubCards');
+      cards.innerHTML='';
+      clubsCache.forEach(club=>{
+        const card=document.createElement('article'); card.className='card';
+        const h=document.createElement('h3'); h.textContent=club.name;
+        const p=document.createElement('p'); p.textContent=club.description;
+        const date=document.createElement('div'); date.className='date'; date.textContent=club.recruitmentOpen===false?'Recruitment closed':(club.deadlineLabel||'Applications open');
+        card.append(h,p,date);
+        if(club.recruitmentOpen!==false){const b=document.createElement('button');b.className='small-btn';b.type='button';b.style.marginTop='10px';b.textContent='Apply now';b.addEventListener('click',()=>{if(!token)openAuth();else {showPanel('studentPanel');$('clubSelect').value=club._id;$('studentPanel').scrollIntoView({behavior:'smooth'});}});card.append(b);}
+        cards.append(card);
+      });
+      $('clubSelect').innerHTML='<option value="">Select a club</option>';
+      clubsCache.forEach(c=>{const o=document.createElement('option');o.value=c._id;o.textContent=c.name+(c.recruitmentOpen===false?' (closed)':'');o.disabled=c.recruitmentOpen===false;$('clubSelect').append(o);});
+    } catch(err) { console.error(err); }
+  }
+  function escapeText(value) { const el=document.createElement('span');el.textContent=value??'';return el.innerHTML; }
+  async function loadStudentApplications() {
+    try {
+      const data=await api('/applications/mine'); const root=$('applicationList'); root.innerHTML='';
+      if(!data.applications.length){root.innerHTML='<p>You have not submitted any applications yet.</p>';return;}
+      data.applications.forEach(a=>{const item=document.createElement('div');item.className='application-item';item.innerHTML='<strong>'+escapeText(a.club?.name||'Club')+'</strong><p>Status: <span class="status">'+escapeText(a.status)+'</span></p><p>Programme: '+escapeText(a.course)+' · '+escapeText(a.year)+'</p><p>Submitted: '+new Date(a.createdAt).toLocaleDateString()+'</p><p>'+escapeText(a.motivation)+'</p>';root.append(item);});
+    } catch(err) { $('applicationList').textContent=err.message; }
+  }
+  async function loadDashboard() {
+    try {
+      const data=await api('/auth/me');
+      $('welcomeHeading').textContent='Welcome, '+data.user.name;
+      $('navAuth').textContent='Dashboard';
+      if(data.user.role==='admin') {showPanel('adminPanel');await loadAdminApplications();}
+      else {showPanel('studentPanel');await loadStudentApplications();}
+      $('apply').scrollIntoView({behavior:'smooth'});
+    } catch(err) { token=null;localStorage.removeItem('campusPortalToken');openAuth(); }
+  }
+  $('applicationForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const payload={clubId:$('clubSelect').value,course:$('studentCourse').value.trim(),year:$('studentYear').value,motivation:$('motivation').value.trim()};
+    try { await api('/applications',{method:'POST',body:JSON.stringify(payload)});message('applicationMessage','Application submitted successfully.','success');$('applicationForm').reset();await loadStudentApplications(); }
+    catch(err){message('applicationMessage',err.message,'error');}
+  });
+  async function loadAdminApplications() {
+    try {
+      const data=await api('/admin/applications');const root=$('adminApplications');root.innerHTML='';
+      if(!data.applications.length){root.textContent='No applications received yet.';return;}
+      data.applications.forEach(a=>{
+        const item=document.createElement('div');item.className='application-item';
+        item.innerHTML='<strong>'+escapeText(a.club?.name||'Club')+'</strong><p>Student: '+escapeText(a.student?.name)+' ('+escapeText(a.student?.email)+')</p><p>'+escapeText(a.course)+' · '+escapeText(a.year)+'</p><p>Motivation: '+escapeText(a.motivation)+'</p><p>Current status: <span class="status">'+escapeText(a.status)+'</span></p>';
+        const select=document.createElement('select');['pending','under_review','accepted','rejected'].forEach(status=>{const o=document.createElement('option');o.value=status;o.textContent=status.replace('_',' ');o.selected=a.status===status;select.append(o);});
+        const btn=document.createElement('button');btn.className='small-btn';btn.style.marginLeft='8px';btn.textContent='Update status';btn.addEventListener('click',async()=>{try{await api('/admin/applications/'+a._id,{method:'PATCH',body:JSON.stringify({status:select.value})});await loadAdminApplications();}catch(err){alert(err.message);}});
+        item.append(select,btn);root.append(item);
+      });
+    } catch(err) { $('adminApplications').textContent=err.message; }
+  }
+  function logout(){token=null;localStorage.removeItem('campusPortalToken');$('navAuth').textContent='Sign in';showPanel('authPanel');setAuthMode('login');message('sessionMessage','You have signed out.','success');}
+  $('logoutButton').addEventListener('click',logout);$('adminLogout').addEventListener('click',logout);
+  $('refreshApplications').addEventListener('click',loadStudentApplications);$('refreshAdmin').addEventListener('click',loadAdminApplications);
+  loadClubs();
+  if(token) loadDashboard(); else setAuthMode('login');
+})();
+</script>
 
 </body>
 </html>
