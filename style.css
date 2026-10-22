@@ -73,3 +73,11 @@
     .cards, .steps { grid-template-columns: 1fr; }
     .hero h1 { font-size: 30px; }
   }
+
+
+/* CSS-only sign-in disclosure: opens the sign-in panel below the button. */
+.auth-disclosure { margin: 0 auto; max-width: 850px; }
+.auth-disclosure > summary { cursor: pointer; list-style: none; }
+.auth-disclosure > summary::-webkit-details-marker { display: none; }
+.auth-disclosure[open] > .portal-panel { display: block; }
+.auth-disclosure[open] > summary { border-radius: 5px 5px 0 0; }
