@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Campus Club & Society Recruitment Portal | South Asian University</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style_updated.css">
 </head>
 <body>
 
@@ -127,10 +127,26 @@
   </div>
 </section>
 
+<div class="club-modal" id="clubModal" aria-hidden="true">
+  <div class="club-modal-backdrop" data-close-modal></div>
+  <section class="club-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="clubModalTitle">
+    <button class="club-modal-close" type="button" aria-label="Close club details" data-close-modal>&times;</button>
+    <p class="club-modal-eyebrow">CLUB &amp; SOCIETY</p>
+    <h2 id="clubModalTitle"></h2>
+    <p class="club-modal-description" id="clubModalDescription"></p>
+    <div class="club-modal-meta" id="clubModalMeta"></div>
+    <div class="club-modal-extra" id="clubModalExtra"></div>
+    <div class="club-modal-actions">
+      <button type="button" class="small-btn" id="clubModalApply">Apply to this club</button>
+      <button type="button" class="small-btn secondary" id="clubModalSave">☆ Save club</button>
+    </div>
+  </section>
+</div>
+
 <footer>
   <p>South Asian University, New Delhi | Student Affairs Office</p>
 </footer>
 
-<script src="script.js"></script>
+<script src="script_updated.js"></script>
 </body>
 </html>

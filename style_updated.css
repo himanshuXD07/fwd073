@@ -1,0 +1,127 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, serif;
+    color: #14233a;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header { border-bottom: 1px solid #c9ddf2; padding: 10px 0; }
+  header .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo img { height: 55px; }
+  .logo span { font-size: 18px; font-weight: bold; color: #0a2a4d; }
+  nav a { margin-left: 20px; color: #0a2a4d; text-decoration: none; }
+  nav a:hover { color: #0b5fb0; }
+
+  /* Hero */
+  .hero { background: #0b5fb0; color: white; text-align: center; padding: 80px 20px; }
+  .hero h1 { font-size: 42px; margin-bottom: 15px; }
+  .hero p { max-width: 600px; margin: 0 auto 25px; font-size: 18px; }
+
+  .btn {
+    display: inline-block;
+    background: #f2a900;
+    color: #0a2a4d;
+    padding: 12px 28px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .btn:hover { background: #ffc233; }
+
+  /* Sections */
+  section { padding: 60px 0; }
+  h2 { text-align: center; color: #0a2a4d; font-size: 30px; margin-bottom: 30px; }
+
+  /* Club cards */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: #eaf2fb; padding: 22px; border-radius: 8px; }
+  .card h3 { color: #0a2a4d; margin-bottom: 8px; }
+  .card p { font-size: 15px; margin-bottom: 10px; }
+  .card .date { font-size: 14px; color: #0b5fb0; font-weight: bold; }
+
+  /* Steps */
+  .steps-section { background: #eaf2fb; }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+  .step h3 { color: #0b5fb0; margin-bottom: 6px; }
+
+  /* Footer */
+  footer { background: #0a2a4d; color: white; text-align: center; padding: 25px 20px; }
+
+  /* Functional portal UI — keeps the original visual theme */
+  .portal-panel { display:none; margin: 28px auto 0; max-width: 850px; text-align:left; background:#fff; border:1px solid #c9ddf2; border-radius:8px; padding:22px; box-shadow:0 8px 24px rgba(10,42,77,.08); }
+  .portal-panel.visible { display:block; }
+  .portal-panel h3 { color:#0a2a4d; margin-bottom:12px; }
+  .portal-form { display:grid; gap:12px; }
+  .portal-form input, .portal-form select, .portal-form textarea { width:100%; padding:11px; border:1px solid #b8cbe0; border-radius:5px; font:inherit; color:#14233a; }
+  .portal-form label { font-weight:bold; font-size:14px; }
+  .portal-form button, .small-btn { border:0; cursor:pointer; background:#0b5fb0; color:white; padding:10px 16px; border-radius:5px; font-weight:bold; font:inherit; }
+  .small-btn.secondary { background:#eaf2fb; color:#0a2a4d; }
+  .portal-actions { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+  .portal-message { margin:10px 0; font-size:14px; }
+  .portal-message.error { color:#b42318; }
+  .portal-message.success { color:#167044; }
+  .application-item { border:1px solid #c9ddf2; border-radius:6px; padding:14px; margin:10px 0; background:#f8fbff; }
+  .status { display:inline-block; padding:2px 9px; border-radius:12px; background:#eaf2fb; color:#0a2a4d; font-size:13px; font-weight:bold; }
+  .portal-hidden { display:none !important; }
+  @media (max-width: 700px) {
+    header .container { flex-direction: column; gap: 10px; }
+    .cards, .steps { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+  }
+
+.club-tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+.club-tools input,.club-tools select{flex:1;min-width:180px;padding:10px;border:1px solid #b8cbe0;border-radius:5px;font:inherit;color:#14233a}
+.save-club{margin-top:8px;font-size:14px!important;padding:7px 12px!important}
+.card[hidden]{display:none}
+
+
+/* Interactive club cards */
+.card {
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover, .card:focus-visible {
+  transform: translateY(-5px);
+  border-color: #b8d3ef;
+  box-shadow: 0 12px 28px rgba(10,42,77,.13);
+  outline: none;
+}
+.card .save-club { position: relative; z-index: 1; }
+
+/* Club details popup */
+.club-modal { display:none; position:fixed; inset:0; z-index:1000; align-items:center; justify-content:center; padding:22px; }
+.club-modal.open { display:flex; }
+.club-modal-backdrop { position:absolute; inset:0; background:rgba(5,20,38,.62); backdrop-filter:blur(3px); }
+.club-modal-dialog {
+  position:relative; z-index:1; width:min(100%, 580px); max-height: min(85vh, 760px);
+  overflow:auto; background:#fff; border-radius:16px; padding:34px;
+  box-shadow:0 24px 70px rgba(0,0,0,.25); animation:clubModalIn .2s ease-out;
+}
+@keyframes clubModalIn { from { opacity:0; transform:translateY(12px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+.club-modal-close {
+  position:absolute; top:14px; right:17px; border:0; background:transparent; color:#53657a;
+  font-size:30px; line-height:1; cursor:pointer; padding:4px 8px;
+}
+.club-modal-eyebrow { color:#0b5fb0; font-size:12px; font-weight:bold; letter-spacing:1.5px; margin-bottom:8px; }
+.club-modal-dialog h2 { text-align:left; margin:0 32px 12px 0; font-size:28px; line-height:1.25; }
+.club-modal-description { font-size:17px; color:#34465c; margin-bottom:20px; }
+.club-modal-meta { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:20px; }
+.club-modal-meta span { background:#eaf2fb; color:#0a2a4d; padding:7px 12px; border-radius:20px; font-size:13px; font-weight:bold; }
+.club-modal-extra { border-top:1px solid #e2eaf3; padding-top:18px; margin-bottom:22px; }
+.club-modal-extra h3 { color:#0a2a4d; font-size:17px; margin-bottom:8px; }
+.club-modal-extra p { margin-bottom:8px; color:#43546a; }
+.club-modal-actions { display:flex; flex-wrap:wrap; gap:10px; }
+.club-modal-actions button { margin:0; }
+body.modal-open { overflow:hidden; }
+@media (max-width:600px) {
+  .club-modal { padding:12px; }
+  .club-modal-dialog { padding:27px 21px; border-radius:12px; }
+  .club-modal-dialog h2 { font-size:23px; }
+}
