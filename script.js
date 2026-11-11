@@ -58,6 +58,132 @@
   search.addEventListener('input', filterCards);
   category.addEventListener('change', filterCards);
   savedButton.addEventListener('click', () => { onlySaved = !onlySaved; filterCards(); });
+  // Click a club card to open its detail popup. Save buttons remain independent.
+  const modal = document.getElementById('clubModal');
+  const modalTitle = document.getElementById('clubModalTitle');
+  const modalDescription = document.getElementById('clubModalDescription');
+  const modalMeta = document.getElementById('clubModalMeta');
+  const modalExtra = document.getElementById('clubModalExtra');
+  const modalSave = document.getElementById('clubModalSave');
+  const modalApply = document.getElementById('clubModalApply');
+  let activeCard = null;
+
+  const clubDetails = {
+    'Coding & Robotics Club': {
+      focus: 'Build, experiment and collaborate on practical technology projects.',
+      activities: 'Hack nights, beginner-friendly coding sessions, robotics builds, workshops and team hackathons.',
+      welcome: 'Students interested in programming, electronics, problem-solving or learning something new are welcome.'
+    },
+    'Debating Society': {
+      focus: 'Develop clear arguments, confident public speaking and thoughtful discussion.',
+      activities: 'Inter-university debates, speaking practice, discussion circles and workshops on argumentation.',
+      welcome: 'Open to students who enjoy current affairs, discussion and learning to communicate their ideas.'
+    },
+    'Cultural Society': {
+      focus: 'Bring the campus community together through the many cultures and traditions of South Asia.',
+      activities: 'Festival celebrations, cultural showcases, performances and collaborative campus events.',
+      welcome: 'Students can contribute through performance, planning, design, coordination or volunteering.'
+    },
+    'Photography & Film Club': {
+      focus: 'Tell stories and document campus life through photography and film.',
+      activities: 'Photo walks, short-film projects, creative workshops and campus event coverage.',
+      welcome: 'Open to beginners and experienced creators interested in visual storytelling.'
+    },
+    'Sports Society': {
+      focus: 'Make sport, fitness and teamwork part of campus life.',
+      activities: 'Cricket, football, badminton, yoga and opportunities to participate at different levels.',
+      welcome: 'Students of all experience levels can get involved and take part.'
+    },
+    'Social Outreach Cell': {
+      focus: 'Connect students with meaningful community service and awareness initiatives.',
+      activities: 'Volunteering, awareness drives and community-focused activities.',
+      welcome: 'Open to students who want to contribute time, ideas and practical support.'
+    }
+  };
+
+  function openClubModal(card) {
+    activeCard = card;
+    const name = nameOf(card);
+    const details = clubDetails[name] || {};
+    modalTitle.textContent = name;
+    modalDescription.textContent = details.focus || card.querySelector('p').textContent.trim();
+    modalMeta.replaceChildren();
+    [card.dataset.category ? card.dataset.category.replace('-', ' ') : 'Student club',
+      card.querySelector('.date')?.textContent.trim() || 'Recruitment details'].forEach(value => {
+      const tag = document.createElement('span');
+      tag.textContent = value;
+      modalMeta.append(tag);
+    });
+    modalExtra.replaceChildren();
+    const heading = document.createElement('h3');
+    heading.textContent = 'What you can expect';
+    const activity = document.createElement('p');
+    activity.textContent = details.activities || card.querySelector('p').textContent.trim();
+    const welcomeHeading = document.createElement('h3');
+    welcomeHeading.textContent = 'Who can join';
+    const welcome = document.createElement('p');
+    welcome.textContent = details.welcome || 'Students interested in this club are encouraged to apply.';
+    modalExtra.append(heading, activity, welcomeHeading, welcome);
+    updateModalSaveButton();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    modal.querySelector('.club-modal-close').focus();
+  }
+
+  function closeClubModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (activeCard) activeCard.focus?.();
+  }
+
+  function updateModalSaveButton() {
+    if (!activeCard) return;
+    const isSaved = saved.has(nameOf(activeCard));
+    modalSave.textContent = isSaved ? '★ Saved' : '☆ Save club';
+    modalSave.setAttribute('aria-pressed', String(isSaved));
+  }
+
+  cards.forEach(card => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `View details for ${nameOf(card)}`);
+    card.addEventListener('click', event => {
+      if (event.target.closest('.save-club')) return;
+      openClubModal(card);
+    });
+    card.addEventListener('keydown', event => {
+      if (event.target !== card) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openClubModal(card);
+      }
+    });
+  });
+
+  modal.querySelectorAll('[data-close-modal]').forEach(element =>
+    element.addEventListener('click', closeClubModal)
+  );
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.classList.contains('open')) closeClubModal();
+  });
+  modalSave.addEventListener('click', () => {
+    if (!activeCard) return;
+    const name = nameOf(activeCard);
+    saved.has(name) ? saved.delete(name) : saved.add(name);
+    localStorage.setItem(SAVED_KEY, JSON.stringify([...saved]));
+    updateSavedButtons();
+    filterCards();
+    updateModalSaveButton();
+  });
+  modalApply.addEventListener('click', () => {
+    if (!activeCard) return;
+    const club = nameOf(activeCard);
+    closeClubModal();
+    if (window.startClubApplication) window.startClubApplication(club);
+  });
+
   updateSavedButtons(); filterCards();
 
   // Demo tracker stores applications in this browser; it is not a server submission.
@@ -86,8 +212,8 @@
       return;
     }
     apps.push({club, course: document.getElementById('studentCourse').value,
-      year: document.getElementById('studentYear').value, date: new Date().toLocaleDateString(),
-      status: 'Submitted (demo)'});
+      year: document.getElementById('studentYear').value, motivation: document.getElementById('motivation').value,
+      date: new Date().toLocaleDateString(), status: 'Submitted (demo)'});
     localStorage.setItem(APP_KEY, JSON.stringify(apps));
     document.getElementById('applicationMessage').textContent = 'Demo application saved in this browser.';
     renderApplications();
@@ -119,6 +245,33 @@
     byId('showRegister').classList.toggle('secondary', !registering);
     setMessage('');
   }
+  let pendingClub = null;
+
+  // Called by the club details popup's Apply button.
+  window.startClubApplication = function(clubName) {
+    pendingClub = clubName;
+    const email = localStorage.getItem(SESSION_KEY);
+    const signedIn = !!email && !!users()[email];
+    if (signedIn) {
+      byId('clubSelect').value = clubName;
+      studentPanel.classList.add('visible');
+      studentPanel.scrollIntoView({behavior:'smooth', block:'start'});
+    } else {
+      authPanel.classList.add('visible');
+      showMode('login');
+      authPanel.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  };
+
+  function continuePendingApplication() {
+    if (!pendingClub) return;
+    const clubName = pendingClub;
+    pendingClub = null;
+    byId('clubSelect').value = clubName;
+    studentPanel.classList.add('visible');
+    studentPanel.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
   function renderSession() {
     const email = localStorage.getItem(SESSION_KEY);
     const signedIn = !!email && !!users()[email];
@@ -154,11 +307,11 @@
       store[email] = {name, password};
       localStorage.setItem(USERS_KEY, JSON.stringify(store));
       localStorage.setItem(SESSION_KEY, email);
-      authForm.reset(); renderSession();
+      authForm.reset(); renderSession(); continuePendingApplication();
     } else {
       if (!store[email] || store[email].password !== password) return setMessage('Email or password is incorrect.');
       localStorage.setItem(SESSION_KEY, email);
-      authForm.reset(); renderSession();
+      authForm.reset(); renderSession(); continuePendingApplication();
     }
   });
   function signOut() { localStorage.removeItem(SESSION_KEY); renderSession(); showMode('login'); }
