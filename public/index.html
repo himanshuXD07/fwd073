@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="#0b5fb0" name="theme-color"/>
+  <title>
+   SAU Campus Connect | Clubs &amp; Societies
+  </title>
+  <link href="style.css" rel="stylesheet"/>
+  <script defer="" src="app.js">
+  </script>
+ </head>
+ <body>
+  <header class="site-header">
+   <div class="wrap nav-wrap">
+    <a class="brand" href="#home">
+     <span class="brand-mark">
+      SAU
+     </span>
+     <span>
+      <b>
+       Campus Connect
+      </b>
+      <small>
+       South Asian University
+      </small>
+     </span>
+    </a>
+    <button aria-label="Toggle navigation" class="menu-toggle" id="menuToggle">
+     ☰
+    </button>
+    <nav id="mainNav">
+     <a href="#clubs">
+      Explore clubs
+     </a>
+     <a href="#updates">
+      Campus updates
+     </a>
+     <a href="#how">
+      How it works
+     </a>
+     <button class="nav-auth" id="navAuth">
+      Sign in
+     </button>
+    </nav>
+   </div>
+  </header>
+  <main id="home">
+   <section class="hero">
+    <div class="wrap hero-grid">
+     <div>
+      <span class="eyebrow light">
+       YOUR CAMPUS. YOUR COMMUNITY.
+      </span>
+      <h1>
+       Find your people.
+       <br/>
+       <em>
+        Build your passion.
+       </em>
+      </h1>
+      <p>
+       Discover student clubs, meet people who share your interests and make your university experience count.
+      </p>
+      <div class="hero-actions">
+       <a class="btn btn-gold" href="#clubs">
+        Explore communities
+        <span>
+         &nearrow;
+        </span>
+       </a>
+       <button class="btn btn-glass" id="heroJoin">
+        Join a club
+       </button>
+      </div>
+      <div class="hero-note">
+       <span class="pulse">
+       </span>
+       Exclusively for verified SAU students
+      </div>
+     </div>
+     <div class="hero-art">
+      <div class="orbit orbit-one">
+      </div>
+      <div class="orbit orbit-two">
+      </div>
+      <div class="hero-tile tile-a">
+       <span>
+        ✦
+       </span>
+       <b>
+        Discover
+       </b>
+       <small>
+        Find your community
+       </small>
+      </div>
+      <div class="hero-tile tile-b">
+       <span>
+        ◎
+       </span>
+       <b>
+        Participate
+       </b>
+       <small>
+        Learn by doing
+       </small>
+      </div>
+      <div class="hero-tile tile-c">
+       <span>
+        &nearrow;
+       </span>
+       <b>
+        Grow
+       </b>
+       <small>
+        Make an impact
+       </small>
+      </div>
+      <div class="hero-center">
+       SAU
+       <br/>
+       <small>
+        TOGETHER
+       </small>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="stats-strip">
+    <div class="wrap stats-grid">
+     <div>
+      <b id="statClubs">
+       &mdash;
+      </b>
+      <span>
+       Student communities
+      </span>
+     </div>
+     <div>
+      <b>
+       01
+      </b>
+      <span>
+       University network
+      </span>
+     </div>
+     <div>
+      <b>
+       &infin;
+      </b>
+      <span>
+       Ways to get involved
+      </span>
+     </div>
+     <div>
+      <b>
+       100%
+      </b>
+      <span>
+       Student focused
+      </span>
+     </div>
+    </div>
+   </section>
+   <section class="section" id="clubs">
+    <div class="wrap">
+     <div class="section-head">
+      <div>
+       <span class="eyebrow">
+        FIND YOUR COMMUNITY
+       </span>
+       <h2>
+        Explore clubs &amp; societies
+       </h2>
+       <p>
+        From technology to culture, there is a place for your interests.
+       </p>
+      </div>
+      <div class="club-count" id="clubCount">
+       Loading clubs&hellip;
+      </div>
+     </div>
+     <div class="toolbar">
+      <label class="searchbox">
+       <span>
+        &telrec;
+       </span>
+       <input id="clubSearch" placeholder="Search clubs, interests or activities&hellip;" type="search"/>
+      </label>
+      <select aria-label="Filter by category" id="clubCategory">
+       <option value="all">
+        All categories
+       </option>
+       <option value="tech">
+        Technology
+       </option>
+       <option value="arts">
+        Arts &amp; culture
+       </option>
+       <option value="sports">
+        Sports
+       </option>
+       <option value="social">
+        Social impact
+       </option>
+       <option value="other">
+        Other
+       </option>
+      </select>
+      <button class="btn btn-outline" id="savedToggle">
+       &star; Saved clubs
+      </button>
+     </div>
+     <div class="cards" id="clubCards">
+      <div class="empty-state">
+       Loading campus communities&hellip;
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="section updates-section" id="updates">
+    <div class="wrap">
+     <div class="section-head">
+      <div>
+       <span class="eyebrow">
+        WHAT'S HAPPENING
+       </span>
+       <h2>
+        From our communities
+       </h2>
+       <p>
+        Announcements, opportunities and a little inspiration from club managers.
+       </p>
+      </div>
+     </div>
+     <div class="feed-grid">
+      <div>
+       <h3 class="subhead">
+        Latest announcements
+       </h3>
+       <div class="feed-list" id="announcements">
+        <div class="empty-state">
+         Loading updates&hellip;
+        </div>
+       </div>
+      </div>
+      <div>
+       <h3 class="subhead">
+        A little motivation
+       </h3>
+       <div class="quote-list" id="quotes">
+        <div class="empty-state">
+         Loading quotes&hellip;
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="section how-section" id="how">
+    <div class="wrap">
+     <div class="section-head centered">
+      <div>
+       <span class="eyebrow">
+        GET STARTED
+       </span>
+       <h2>
+        Your next chapter starts here
+       </h2>
+       <p>
+        A simple, transparent path from discovery to joining.
+       </p>
+      </div>
+     </div>
+     <div class="steps">
+      <article>
+       <span>
+        01
+       </span>
+       <h3>
+        Explore
+       </h3>
+       <p>
+        Browse clubs and discover what each community does.
+       </p>
+      </article>
+      <article>
+       <span>
+        02
+       </span>
+       <h3>
+        Apply
+       </h3>
+       <p>
+        Use your verified SAU student account to submit an application.
+       </p>
+      </article>
+      <article>
+       <span>
+        03
+       </span>
+       <h3>
+        Track
+       </h3>
+       <p>
+        Follow every stage of your application from your dashboard.
+       </p>
+      </article>
+      <article>
+       <span>
+        04
+       </span>
+       <h3>
+        Get involved
+       </h3>
+       <p>
+        Hear back from club managers and take your next step.
+       </p>
+      </article>
+     </div>
+    </div>
+   </section>
+   <section class="section portal-section" id="portal">
+    <div class="wrap">
+     <div class="section-head">
+      <div>
+       <span class="eyebrow">
+        YOUR CAMPUS SPACE
+       </span>
+       <h2 id="portalTitle">
+        Student portal
+       </h2>
+       <p id="portalSubtitle">
+        Sign in or create an account with your SAU student email.
+       </p>
+      </div>
+     </div>
+     <div class="panel auth-panel" id="authPanel">
+      <div class="auth-intro">
+       <div class="auth-icon">
+        ✦
+       </div>
+       <h3 id="authHeading">
+        Welcome back
+       </h3>
+       <p id="authIntro">
+        Sign in to manage your applications and saved clubs.
+       </p>
+      </div>
+      <div class="auth-tabs">
+       <button class="active" id="showLogin">
+        Sign in
+       </button>
+       <button id="showRegister">
+        Create account
+       </button>
+      </div>
+      <form class="form-grid" id="authForm">
+       <label class="hidden" id="nameField">
+        Full name
+        <input autocomplete="name" id="fullName" maxlength="100" minlength="2" name="name"/>
+       </label>
+       <label>
+        University email
+        <input autocomplete="email" id="email" name="email" placeholder="name@students.sau.ac.in" required="" type="email"/>
+       </label>
+       <label>
+        Password
+        <input autocomplete="current-password" id="password" maxlength="128" minlength="10" name="password" placeholder="At least 10 characters" required="" type="password"/>
+       </label>
+       <p class="hint full">
+        Registration is restricted to
+        <b>
+         @students.sau.ac.in
+        </b>
+        addresses. Email verification is required.
+       </p>
+       <button class="btn btn-primary full" id="authSubmit">
+        Sign in
+       </button>
+       <p class="message full" id="authMessage" role="status">
+       </p>
+      </form>
+     </div>
+     <div class="panel dashboard hidden" id="studentPanel">
+      <div class="dash-top">
+       <div>
+        <span class="eyebrow">
+         STUDENT DASHBOARD
+        </span>
+        <h3 id="welcomeHeading">
+         Welcome
+        </h3>
+        <p id="sessionMessage">
+        </p>
+       </div>
+       <button class="btn btn-outline" id="logoutButton">
+        Sign out
+       </button>
+      </div>
+      <div class="dash-tabs">
+       <button class="active" data-tab="myApplications">
+        My applications
+       </button>
+       <button data-tab="mySaved">
+        Saved clubs
+       </button>
+      </div>
+      <div class="dash-content" id="myApplications">
+       <div class="application-list" id="applicationList">
+       </div>
+       <h4 class="apply-heading">
+        Ready to apply?
+       </h4>
+       <form class="form-grid" id="applicationForm">
+        <label>
+         Choose a club
+         <select id="clubSelect" required="">
+         </select>
+        </label>
+        <label>
+         Course / programme
+         <input id="studentCourse" maxlength="120" placeholder="e.g. B.Tech Computer Science" required=""/>
+        </label>
+        <label>
+         Academic year
+         <select id="studentYear" required="">
+          <option value="">
+           Select year
+          </option>
+          <option>
+           1st Year
+          </option>
+          <option>
+           2nd Year
+          </option>
+          <option>
+           3rd Year
+          </option>
+          <option>
+           4th Year
+          </option>
+          <option>
+           Postgraduate
+          </option>
+          <option>
+           Research Scholar
+          </option>
+         </select>
+        </label>
+        <label class="full">
+         Why do you want to join?
+         <textarea id="motivation" maxlength="3000" minlength="30" placeholder="Tell the club about your interests, experience and what you hope to contribute (30&ndash;3000 characters)." required="" rows="4"></textarea>
+        </label>
+        <button class="btn btn-primary full">
+         Submit application
+        </button>
+        <p class="message full" id="applicationMessage" role="status">
+        </p>
+       </form>
+      </div>
+      <div class="dash-content hidden" id="mySaved">
+       <div class="saved-list" id="savedClubsList">
+       </div>
+      </div>
+     </div>
+     <div class="panel manager-panel hidden" id="managerPanel">
+      <div class="dash-top">
+       <div>
+        <span class="eyebrow">
+         CLUB MANAGEMENT
+        </span>
+        <h3 id="managerWelcome">
+         Manager dashboard
+        </h3>
+        <p>
+         Manage your club's recruitment and keep students informed.
+        </p>
+       </div>
+       <button class="btn btn-outline" id="managerLogout">
+        Sign out
+       </button>
+      </div>
+      <div class="manager-grid">
+       <div class="manager-card">
+        <h4>
+         Publish an announcement
+        </h4>
+        <form class="form-grid" id="announcementForm">
+         <label>
+          Club
+          <select id="announcementClub" required="">
+          </select>
+         </label>
+         <label>
+          Title
+          <input id="announcementTitle" maxlength="180" required=""/>
+         </label>
+         <label class="full">
+          Announcement
+          <textarea id="announcementBody" maxlength="5000" required="" rows="4"></textarea>
+         </label>
+         <label class="full">
+          Optional image (JPG, PNG, WEBP; max 3 MB)
+          <input accept="image/png,image/jpeg,image/webp" id="announcementImage" type="file"/>
+         </label>
+         <button class="btn btn-primary full">
+          Publish announcement
+         </button>
+         <p class="message full" id="announcementMessage">
+         </p>
+        </form>
+       </div>
+       <div class="manager-card">
+        <h4>
+         Share a motivation quote
+        </h4>
+        <form class="form-grid" id="quoteForm">
+         <label>
+          Club
+          <select id="quoteClub" required="">
+          </select>
+         </label>
+         <label class="full">
+          Quote
+          <textarea id="quoteText" maxlength="500" minlength="8" required="" rows="3"></textarea>
+         </label>
+         <label class="full">
+          Attribution (optional)
+          <input id="quoteAttribution" maxlength="120" placeholder="Author / source"/>
+         </label>
+         <button class="btn btn-primary full">
+          Publish quote
+         </button>
+         <p class="message full" id="quoteMessage">
+         </p>
+        </form>
+       </div>
+      </div>
+      <div class="manager-card">
+       <div class="dash-top">
+        <h4>
+         Applications to review
+        </h4>
+        <button class="btn btn-outline" id="refreshManaged">
+         Refresh
+        </button>
+       </div>
+       <div id="managedApplications">
+       </div>
+      </div>
+     </div>
+     <div class="panel admin-panel hidden" id="adminPanel">
+      <div class="dash-top">
+       <div>
+        <span class="eyebrow">
+         PORTAL ADMINISTRATION
+        </span>
+        <h3>
+         Admin control centre
+        </h3>
+        <p>
+         Manage clubs, access and recruitment activity.
+        </p>
+       </div>
+       <button class="btn btn-outline" id="adminLogout">
+        Sign out
+       </button>
+      </div>
+      <div class="admin-stats" id="adminStats">
+      </div>
+      <div class="admin-grid">
+       <div class="manager-card">
+        <h4>
+         Create a club
+        </h4>
+        <form class="form-grid" id="createClubForm">
+         <label>
+          Club name
+          <input id="newClubName" maxlength="120" required=""/>
+         </label>
+         <label>
+          Category
+          <select id="newClubCategory">
+           <option value="tech">
+            Technology
+           </option>
+           <option value="arts">
+            Arts &amp; culture
+           </option>
+           <option value="sports">
+            Sports
+           </option>
+           <option value="social">
+            Social impact
+           </option>
+           <option value="other">
+            Other
+           </option>
+          </select>
+         </label>
+         <label class="full">
+          Description
+          <textarea id="newClubDescription" minlength="10" required=""></textarea>
+         </label>
+         <label class="full">
+          Focus (optional)
+          <input id="newClubFocus"/>
+         </label>
+         <label class="full">
+          Activities (optional)
+          <input id="newClubActivities"/>
+         </label>
+         <button class="btn btn-primary full">
+          Create club
+         </button>
+         <p class="message full" id="createClubMessage">
+         </p>
+        </form>
+       </div>
+       <div class="manager-card">
+        <h4>
+         Assign club managers
+        </h4>
+        <div id="managerAssignments">
+        </div>
+       </div>
+      </div>
+      <div class="manager-card">
+       <h4>
+        University accounts
+       </h4>
+       <div id="userManagement">
+       </div>
+      </div>
+      <div class="manager-card">
+       <h4>
+        All applications
+       </h4>
+       <div id="adminApplications">
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer>
+   <div class="wrap footer-inner">
+    <div class="brand footer-brand">
+     <span class="brand-mark">
+      SAU
+     </span>
+     <span>
+      <b>
+       Campus Connect
+      </b>
+      <small>
+       South Asian University
+      </small>
+     </span>
+    </div>
+    <p>
+     Built for student communities. Access restricted to verified SAU student accounts.
+    </p>
+    <span>
+     &copy;
+     <span id="year">
+     </span>
+     SAU Campus Connect
+    </span>
+   </div>
+  </footer>
+  <div aria-labelledby="modalTitle" aria-modal="true" class="modal hidden" id="clubModal" role="dialog">
+   <div class="modal-backdrop" data-close="">
+   </div>
+   <div class="modal-card">
+    <button aria-label="Close" class="modal-close" data-close="">
+     &times;
+    </button>
+    <span class="eyebrow" id="modalCategory">
+     COMMUNITY
+    </span>
+    <h2 id="modalTitle">
+    </h2>
+    <p id="modalDescription">
+    </p>
+    <div class="modal-details" id="modalDetails">
+    </div>
+    <h4>
+     Latest from this club
+    </h4>
+    <div id="modalUpdates">
+    </div>
+    <div class="modal-actions">
+     <button class="btn btn-outline" id="modalSave">
+      &star; Save club
+     </button>
+     <button class="btn btn-primary" id="modalApply">
+      Apply to join
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="toast" id="toast" role="status">
+  </div>
+ </body>
+</html>
